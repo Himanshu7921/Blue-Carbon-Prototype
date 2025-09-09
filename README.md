@@ -1,6 +1,3 @@
-Here’s a **README.md** draft with your requested Mermaid flowchart included:
-
-````markdown
 # Blockchain-Based Blue Carbon MRV System
 
 ## Overview
@@ -50,5 +47,3 @@ flowchart TD
 * Integration with IoT devices for automated project monitoring.
 * AI-driven fraud detection in project validation.
 * Global marketplace for carbon credits.
-
-```
