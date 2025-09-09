@@ -24,12 +24,12 @@ flowchart TD
     Customer([🔵 Customer Portal<br/>Web App]) --> |Buy Carbon Credits| API
 
     %% Backend Layer
-    API --> BE[🖥️ Backend Services<br/>Node.js/Express]
-    BE --> DB[(🗄️ Database<br/>PostgreSQL/MongoDB)]
-    BE --> AUTH[🔐 Auth Service<br/>JWT / OAuth2]
+    API --> BE[🖥️ Backend Services<br/>Node.js]
+    BE --> DB[(🗄️ Database<br/>MongoDB)]
+    BE --> AUTH[🔐 Auth Service<br/>OAuth2]
 
     %% Blockchain Layer
-    BE --> SC[⛓️ Smart Contracts<br/>Ethereum/Polygon]
+    BE --> SC[⛓️ Smart Contracts<br/>Ethereum]
     SC --> BC[🟣 Blockchain Ledger]
     BC --> REG[📑 Carbon Credit Registry<br/>Immutable Records]
 
