@@ -17,31 +17,38 @@ It integrates multiple stakeholders such as NGOs, Auditors, and Customers into a
 ## System Flow
 
 ```mermaid
-flowchart TD
-    %% Frontend Layer
-    NGO([🟢 NGO Portal<br/>Web App]) --> |Upload Project Data| API[⚡ API Gateway]
-    Auditor([🟠 Auditor Portal<br/>Web App]) --> |Verify Projects| API
-    Customer([🔵 Customer Portal<br/>Web App]) --> |Buy Carbon Credits| API
+flowchart LR
+    subgraph Users[Stakeholders]
+        NGO[NGO Portal]
+        Auditor[Auditor Portal]
+        Customer[Customer Portal]
+    end
 
-    %% Backend Layer
-    API --> BE[🖥️ Backend Services<br/>Node.js/Express]
-    BE --> DB[(🗄️ Database<br/>PostgreSQL/MongoDB)]
-    BE --> AUTH[🔐 Auth Service<br/>JWT / OAuth2]
+    NGO --> |Project Submission| APIGW[API Gateway + Load Balancer]
+    Auditor --> |Verification| APIGW
+    Customer --> |Purchase Request| APIGW
 
-    %% Blockchain Layer
-    BE --> SC[⛓️ Smart Contracts<br/>Ethereum/Polygon]
-    SC --> BC[🟣 Blockchain Ledger]
-    BC --> REG[📑 Carbon Credit Registry<br/>Immutable Records]
+    subgraph BackendCluster[Backend Services]
+        Service[Business Logic / Token Issuance]
+    end
 
-    %% Styling
-    style API fill:#ffe6cc,stroke:#333,stroke-width:2px
-    style BE fill:#e6f2ff,stroke:#333,stroke-width:2px
-    style DB fill:#ffffcc,stroke:#333,stroke-width:2px
-    style AUTH fill:#ccffcc,stroke:#333,stroke-width:2px
-    style SC fill:#f9ccff,stroke:#333,stroke-width:2px
-    style BC fill:#f2ccff,stroke:#333,stroke-width:2px
-    style REG fill:#bbf,stroke:#333,stroke-width:2px
+    APIGW --> Service
 
+    Service --> DB[(Database)]
+    Service --> Blockchain[Blockchain Layer]
+
+    Blockchain --> Registry[Carbon Credit Registry]
+
+    subgraph Optional[Optional Layer]
+        CDN[CDN / Cache]
+    end
+
+    NGO --> |Upload Photos/Docs| CDN
+    CDN --> Service
+
+    style Blockchain fill:#f9f,stroke:#333,stroke-width:2px
+    style Registry fill:#bbf,stroke:#333,stroke-width:2px
+    style APIGW fill:#ffb,stroke:#333,stroke-width:2px
 ````
 
 ---
