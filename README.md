@@ -18,16 +18,30 @@ It integrates multiple stakeholders such as NGOs, Auditors, and Customers into a
 
 ```mermaid
 flowchart TD
-    NGO[NGO Portal] --> |Upload Project Data| Backend
-    Auditor[Auditor Portal] --> |Verify Projects| Backend
-    Customer[Customer Portal] --> |Buy Carbon Credits| Backend
+    %% Frontend Layer
+    NGO([🟢 NGO Portal<br/>Web App]) --> |Upload Project Data| API[⚡ API Gateway]
+    Auditor([🟠 Auditor Portal<br/>Web App]) --> |Verify Projects| API
+    Customer([🔵 Customer Portal<br/>Web App]) --> |Buy Carbon Credits| API
 
-    Backend --> Blockchain[Blockchain Layer]
-    Backend --> Database[(Database)]
-    Blockchain --> Registry[Carbon Credit Registry]
+    %% Backend Layer
+    API --> BE[🖥️ Backend Services<br/>Node.js/Express]
+    BE --> DB[(🗄️ Database<br/>PostgreSQL/MongoDB)]
+    BE --> AUTH[🔐 Auth Service<br/>JWT / OAuth2]
 
-    style Blockchain fill:#f9f,stroke:#333,stroke-width:2px
-    style Registry fill:#bbf,stroke:#333,stroke-width:2px
+    %% Blockchain Layer
+    BE --> SC[⛓️ Smart Contracts<br/>Ethereum/Polygon]
+    SC --> BC[🟣 Blockchain Ledger]
+    BC --> REG[📑 Carbon Credit Registry<br/>Immutable Records]
+
+    %% Styling
+    style API fill:#ffe6cc,stroke:#333,stroke-width:2px
+    style BE fill:#e6f2ff,stroke:#333,stroke-width:2px
+    style DB fill:#ffffcc,stroke:#333,stroke-width:2px
+    style AUTH fill:#ccffcc,stroke:#333,stroke-width:2px
+    style SC fill:#f9ccff,stroke:#333,stroke-width:2px
+    style BC fill:#f2ccff,stroke:#333,stroke-width:2px
+    style REG fill:#bbf,stroke:#333,stroke-width:2px
+
 ````
 
 ---
